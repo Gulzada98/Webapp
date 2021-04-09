@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+
+<div layout:fragment="main_section">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-sm-6 offset-3">
+        <form th:action="@{'/Items'}" method="post">
+
+          <div class="form-group">
+            <label th:text="#{item.name}"></label>
+            <input type="text" class="form-control" name="name">
+          </div>
+
+          <div class="form-group">
+            <label th:text="#{item.price}"></label>
+            <input type="number" class="form-control" name="price">
+          </div>
+
+          <div class="form-group">
+            <label th:text="#{item.amount}"></label>
+            <input type="number" class="form-control" name="amount">
+          </div>
+
+          <div class="form-group">
+            <label th:text="#{item.description}"></label>
+            <input type="text" class="form-control" name="description">
+          </div>
+
+          <select class="form-control mt-2" name="countryId">
+            <option th:each="country : ${countries}" th:value="${country.Id}">
+              <label th:text="${country.Id}+' ' +${country.Name}"></label>
+
+            </option>
+          </select>
+
+
+          <div class="form-group mt-2">
+            <button class="btn btn-success" type="submit" style="width: 100px" th:text="#{button.add}"></button>
+          </div>
+
+        </form>
+
+      </div>
+
+      <div class="col-sm-12 mt-3">
+        <table class="table">
+          <thead>
+          <th th:text="#{item.id}"></th>
+          <th th:text="#{item.name}"></th>
+          <th th:text="#{item.price}"></th>
+          <th th:text="#{item.amount}"></th>
+          <th th:text="#{item.description}"></th>
+          <th th:text="#{item.detail}"></th>
+          </thead>
+
+          <tbody>
+          <tr th:each="item : ${items}">
+            <td th:text="${item.Id}"></td>
+            <td th:text="${item.Name}"></td>
+            <td th:text="${item.Price}"></td>
+            <td th:text="${item.Amount}"></td>
+            <td th:text="${item.Description}"></td>
+            <td>
+              <form th:action="@{'/editItem'}" method="get">
+                <input type="hidden" th:value="${item.Id}" name="itemId">
+                <button class="btn btn-success" type="submit" style="width: 130px" th:text="#{button.details}"></button>
+              </form>
+            </td>
+            <td>
+              <form th:action="@{'/deleteItem'}" method="post">
+                <input type="hidden" th:value="${item.Id}" name="itemId">
+                <button class="btn btn-dark" type="submit" style="width: 130px" th:text="#{button.delete}"></button>
+              </form>
+
+            </td>
+
+            <!--По моему эти кнопки должны быть в форме где метод пост-->
+
+            <!--                            <button class="btn btn-success" style="width: 150px" th:text="#{button.details}"></button>-->
+
+            <!--                            <button class="btn btn-info" style="width: 150px" th:text="#{button.delete}"></button>-->
+
+          </tr>
+
+
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</html>

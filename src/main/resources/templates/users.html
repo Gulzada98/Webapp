@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="layout/main.html">
+<div layout:fragment="main_section">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-sm-6 offset-3">
+        <form th:action="@{'/adduser'}" method="post">
+          <div class="form-group">
+            <label th:text="#{label.email}"> </label>
+            <input type="email" class="form-control" name="email">
+          </div>
+          <div class="form-group">
+            <label th:text="#{label.password}"> </label>
+            <input type="password" class="form-control" name="password">
+          </div>
+          <div class="form-group">
+            <label th:text="#{label.confirm}"> </label>
+            <input type="password" class="form-control" name="confirm_password">
+          </div>
+          <div class="form-group">
+            <label th:text="#{label.fullname}"> </label>
+            <input type="text" class="form-control" name="full_name">
+          </div>
+          <div class="form-group mt-2">
+            <button class="btn btn-info" th:text="#{button.add}"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-sm-12">
+        <table class="table table-bordered">
+          <thead>
+          <th th:text="#{label.id}"></th>
+          <th th:text="#{label.email}"></th>
+          <th th:text="#{label.fullname}"></th>
+          <th th:text="#{label.roles}"></th>
+          <th th:text="#{label.detail}"></th>
+          </thead>
+          <tbody>
+          <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.fullName}"></td>
+            <td>
+              <span th:each="role : ${user.roles}" class="me-3" th:text="${role.role}"></span>
+            </td>
+            <td>
+              <a th:href="@{'/details/' + ${user.id}}" class="btn btn-info btn-sm" th:text="#{label.detail}"></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="row">
+          <div class="col-sm-12">
+            <th:block th:each="id : ${#numbers.sequence(1, pageCount)}">
+              <a th:href="@{/users(page=${id})}" th:text="${id}" class="btn btn-primary"
+                 th:classappend="${id}==${#request.getParameter('page')}? 'active':'' "></a>
+            </th:block>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>

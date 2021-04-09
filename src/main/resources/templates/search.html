@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+<div layout:fragment="main_section">
+  <div class="container">
+    <form th:action="@{'/search'}" method="get">
+      <div class="row mt-3">
+        <div class="col-sm-2">
+          <labe>
+            Name:
+          </labe>
+          <input type="text" name="name" class="form-control" th:value="${#request.getParameter('name')}">
+        </div>
+        <div class="col-sm-2">
+          <labe>
+            Author:
+          </labe>
+          <input type="text" name="author" class="form-control" th:value="${#request.getParameter('author')}">
+        </div>
+        <div class="col-sm-2">
+          <labe>
+            Page from:
+          </labe>
+          <input type="number" name="page_from" class="form-control" th:value="${#request.getParameter('page_from')}">
+        </div>
+        <div class="col-sm-2">
+          <labe>
+            Page to:
+          </labe>
+          <input type="number" name="page_to" class="form-control" th:value="${#request.getParameter('page_to')}">
+        </div>
+        <div class="col-sm-2">
+          <labe>
+            Price from:
+          </labe>
+          <input type="number" name="price_from" class="form-control" th:value="${#request.getParameter('price_from')}">
+        </div>
+        <div class="col-sm-2">
+          <labe>
+            Price to:
+          </labe>
+          <input type="number" name="price_to" class="form-control" th:value="${#request.getParameter('price_to')}">
+        </div>
+        <div class="row mt-3">
+          <div class="col-sm-12">
+            <button class="btn btn-success">Search</button>
+            <a class="btn btn-danger float-end" th:href="@{'/search'}">Refresh</a>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row mt-3">
+        <div class="container" th:each="book : ${books}">
+          <div class="mb-4 bg-light" >
+            <h1 class="display-4" th:text="${book.name}"></h1>
+            <p th:text="${book.author}"></p>
+            <p th:text="${book.page}"></p>
+            <p th:text="${book.price}"></p>
+            <a class="btn btn-primary btn-sm" href="#" role="button">Read more</a>
+            <hr class="my-4">
+          </div>
+        </div>
+    </div>
+    <th:block th:each="id : ${#numbers.sequence(1, pageCount)}">
+      <a th:href="@{/search(page=${id},name=${#request.getParameter('name')},author=${#request.getParameter('author')},page_from=${#request.getParameter('page_from')},page_to=${#request.getParameter('page_to')},price_from=${#request.getParameter('price_from')},price_to=${#request.getParameter('price_to')})}" th:text="${id}" class="btn btn-primary"
+         th:classappend="${id}==${#request.getParameter('page')}? 'active':'' "></a>
+    </th:block>
+  </div>
+</div>
+</html>

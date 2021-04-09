@@ -1,0 +1,36 @@
+#Database
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/itemsdb
+    username: root
+    password:
+#    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+#Server
+server:
+  port: 3310
+
+
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,health,info
+  endpoint:
+    health:
+      show-details: always
+
+
+#File path config
+file:
+  upload:
+    ava: target/classes/static/ava/
+    avaclasspath: static/ava/
+    default: target/classes/static/default/
+    defclasspath: static/default/
+

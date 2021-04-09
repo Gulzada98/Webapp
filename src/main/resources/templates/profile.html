@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+<div layout:fragment="main_section">
+  <div class="container">
+    <div class="row mt-3">
+      <div class="col-sm-6 offset-3">
+
+        <img th:src="@{'/viewprofilephoto/' + ${currentUser.avaHash}}" class="img-fluid">
+
+
+        <form th:action="@{'/uploadava'}" method="post" enctype="multipart/form-data">
+          <div>
+            <label class="form-label" th:text="#{label.chooseFile}"></label>
+            <input class="form-control form-control-lg" type="file" name="file_ava">
+          </div>
+          <div>
+            <button class="btn btn-success" th:text="#{button.upload}"></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</html>
